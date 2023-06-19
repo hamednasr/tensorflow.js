@@ -8,10 +8,10 @@
     <script lang="js">
       async function doTraining(model){
         const history = await model.fit(xs, ys,{
-          epochs:500,
+          epochs:1000,
           callbacks:{
             onEpochEnd: async(epoch, logs) => {
-              console.log("Epoch:"+epoch+"Loss:"+logs.loss)
+              console.log("Epoch: "+epoch+", Loss: "+logs.loss)
             }
           }
         });
@@ -24,8 +24,9 @@
       const xs = tf.tensor([1,2,3,4,5,6])
       const ys = xs.mul(2).add(3)
 
+
       doTraining(model).then(()=>{
-        alert(model.predict(tf.tensor([11])))
+        model.predict(tf.tensor([11])).print()
       });
     </script>
   </body>
