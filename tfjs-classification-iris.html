@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>classification model in TensorFlow.js</title>
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script lang="js">
+        const csvUrl = 'https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv'
+
+        async function run(){
+            const csvDataset = tf.data.csv(
+                csvUrl, {
+                columnConfigs: {
+                    variety: {
+                    isLabel: true
+                    }
+                }
+                });
+
+            // Number of features is the number of column names minus one for the label column.
+            const numOfFeatures = (await csvDataset.columnNames()).length - 1;
+
+            // Prepare the Dataset for training.
+            const convertedDataset =
+            csvDataset
+            .map(({xs, ys}) =>
+                {
+                const labels = [
+                                ys.variety == 'Setosa' ? 1 : 0,
+                                ys.variety == 'Virginica' ? 1 : 0,
+                                ys.variety == 'Versicolor' ? 1 : 0,
+                ]
+                // Convert xs(features) and ys(labels) from object form (keyed by
+                // column name) to array form.
+                return {xs:Object.values(xs), ys:Object.values(labels)};
+                })
+            .batch(10);
+
+            // Define the model.
+            const model = tf.sequential();
+            model.add(tf.layers.dense({
+                inputShape: [numOfFeatures],
+                units: 8,
+                activation:'relu'
+            }));
+            model.add(tf.layers.dense({
+                units: 4,
+                activation:'relu'
+            }));
+            model.add(tf.layers.dense({
+                units: 3,
+                activation:'softmax'
+            }));
+
+
+            model.compile({
+                optimizer: tf.train.adam(0.001),
+                loss: 'categoricalCrossentropy',
+                accuracy:'precision'
+            });
+
+            // Fit the model using the prepared Dataset
+            return model.fitDataset(convertedDataset, {
+                epochs: 10,
+                callbacks: {
+                onEpochEnd: async (epoch, logs) => {
+                    console.log("Epoch: "+epoch+", Loss: "+logs.loss+ ", accuracy: "+logs.accuracy);
+                }
+                }
+            });
+
+            const test = tf.tensor2d([5.0,3.4,3.8,2.1],[1,4])
+            const prediction = model.predict(test)
+            alert(prediction)
+        }
+
+
+    run();
+  </script>
+  <body></body>
+</html>
