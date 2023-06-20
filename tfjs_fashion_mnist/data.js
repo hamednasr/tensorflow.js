@@ -25,7 +25,7 @@ const MNIST_LABELS_PATH =
  * NOTE: This will get much easier. For now, we do data fetching and
  * manipulation manually.
  */
-export class FMnistData {
+export class FashionMnistData {
   constructor() {
     this.shuffledTrainIndex = 0;
     this.shuffledTestIndex = 0;
