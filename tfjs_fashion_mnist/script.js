@@ -52,7 +52,7 @@ async function train(model, data) {
   const fitCallbacks = tfvis.show.fitCallbacks(container, metrics);
 
   const BATCH_SIZE = 512;
-  const TRAIN_DATA_SIZE = 5500;
+  const TRAIN_DATA_SIZE = 6000;
   const TEST_DATA_SIZE = 1000;
 
   // Once we load the data (from run() function calls) we can batch and rezise them to 28x28
