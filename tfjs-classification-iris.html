@@ -56,7 +56,7 @@
             model.compile({
                 optimizer: tf.train.adam(0.001),
                 loss: 'categoricalCrossentropy',
-                accuracy:'precision'
+                metrics:['accuracy']
             });
 
             // Fit the model using the prepared Dataset
@@ -64,14 +64,21 @@
                 epochs: 10,
                 callbacks: {
                 onEpochEnd: async (epoch, logs) => {
-                    console.log("Epoch: "+epoch+", Loss: "+logs.loss+ ", accuracy: "+logs.accuracy);
+                    console.log("Epoch: "+epoch+", Loss: "+logs.loss+ ", accuracy: ");
                 }
                 }
             });
 
-            const test = tf.tensor2d([5.0,3.4,3.8,2.1],[1,4])
-            const prediction = model.predict(test)
-            alert(prediction)
+            const testVal = tf.tensor([5.8,2.7,5.1,1.9]);
+
+            const prediction = model.predict(testVal);
+            // const pIndex = tf.argMax(prediction, axis=1).dataSync();
+
+            // const classNames = ["Setosa", "Virginica", "Versicolor"];
+
+            // // alert(prediction)
+            // const ddf= classNames[pIndex]
+            console.log(prediction)
         }
 
 
