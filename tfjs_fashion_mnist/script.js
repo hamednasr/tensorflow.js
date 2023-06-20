@@ -1,4 +1,4 @@
-import { MnistData } from "./data.js";
+import { FashionMnistData } from "./data.js";
 var canvas, ctx, saveButton, clearButton;
 var pos = { x: 0, y: 0 };
 var rawImage;
@@ -51,7 +51,7 @@ async function train(model, data) {
   const container = { name: "Model Training", styles: { height: "640px" } };
   const fitCallbacks = tfvis.show.fitCallbacks(container, metrics);
 
-  const BATCH_SIZE = 512;
+  const BATCH_SIZE = 200;
   const TRAIN_DATA_SIZE = 6000;
   const TEST_DATA_SIZE = 1000;
 
@@ -122,8 +122,20 @@ function save() {
   var prediction = model.predict(tensor);
   // take the highest probability
   var pIndex = tf.argMax(prediction, 1).dataSync();
+  const classes = [
+    "shirt/top",
+    "Trouser",
+    "Pullover",
+    "Dress",
+    "Coat",
+    "Sandal",
+    "Shirt",
+    "Sneaker",
+    "Bag",
+    "Ankle boot",
+  ];
 
-  alert(pIndex);
+  alert(classes[pIndex]);
 }
 
 // Sets up UI
