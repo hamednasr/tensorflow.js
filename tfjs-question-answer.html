@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question and Answer</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <!-- Make sure your page supports utf-8 characterset. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Load the qna model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna"></script>
+
+    <script>
+      const passage =
+        "The study of psychology involves understanding human behavior, emotions, and mental processes. One common approach to psychology is the cognitive-behavioral approach, which focuses on how thoughts and behaviors interact to influence experiences. Through this approach, psychologists aim to identify and modify negative thinking and behavior patterns in order to enhance mental health and quality of life. Additionally, many psychologists study the underlying biology of these processes, particularly as they relate to the brain and its functions.";
+      const question =
+        "What is the cognitive-behavioral approach to psychology?";
+      qna.load().then((model) => {
+        // Find the answers
+        model.findAnswers(question, passage).then((answers) => {
+          console.log("Answers: ", answers);
+        });
+      });
+    </script>
+  </head>
+  <body></body>
+</html>
