@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobileNet Object Detection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
+    <!-- Load the MobileNet model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+</head>
+<body>
+    <img id="img" src="cat.jpg"></img>
+    <script>
+        const img = document.getElementById('img');
+      
+        // Load the model.
+        mobilenet.load().then(model => {
+          // Classify the image.
+          model.classify(img).then(predictions => {
+            console.log('Predictions: ');
+            console.log(predictions);
+          });
+        });
+      </script>
+    
+</body>
+</html>
