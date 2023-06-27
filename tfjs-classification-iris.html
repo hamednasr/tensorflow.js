@@ -61,7 +61,7 @@
 
             // Fit the model using the prepared Dataset
             return model.fitDataset(convertedDataset, {
-                epochs: 10,
+                epochs: 100,
                 callbacks: {
                 onEpochEnd: async (epoch, logs) => {
                     console.log("Epoch: "+epoch+", Loss: "+logs.loss+ ", accuracy: ");

@@ -7,7 +7,7 @@
   <script lang="js">
     async function doTraining(model){
       const history = await model.fit(xs, ys,{
-        epochs:500,
+        epochs:3000,
         callbacks:{
           onEpochEnd: async(epoch, logs) => {
             console.log("Epoch: "+epoch+", Loss: "+logs.loss)
@@ -16,13 +16,14 @@
       });
     }
     const model = tf.sequential();
-    model.add(tf.layers.dense({units:4, inputShape: [1]}));
+    model.add(tf.layers.dense({units:4,activation:'relu', inputShape: [1]}));
+    model.add(tf.layers.dense({units:4, activation:'relu'}));
     model.add(tf.layers.dense({units:1}));
     model.compile({loss:"meanSquaredError", optimizer:"adam"})
     model.summary();
     const xs = tf.tensor([1,2,3,4,5,6])
     const ys = xs.mul(2).add(3)
-
+    // console.log(ys)
 
     doTraining(model).then(()=>{
       model.predict(tf.tensor([11])).print()
